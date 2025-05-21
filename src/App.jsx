@@ -1,13 +1,32 @@
 import { useState } from 'react'
+import languages from "./languages"
+import Language from './component/language'
+import Letter from './component/letter'
+import Keyboard from './component/keyboard'
 
 export default function App() {
-  const [count, setCount] = useState(0)
-
+  const [currentWord,setCurrentWord] = useState("Temporary")
+  const letterElements=currentWord.split("")
+  const alphabet="abcdefghijklmnopqrstuvwxyz"
+  const keyboardData =alphabet.split("").map(alpha => {
+    return <Keyboard letter={alpha}/>
+  })
+  const wordData= letterElements.map((letter,index) => {
+    return <Letter letter={letter} key={index}/>
+  })
+  const languageData = languages.map((lang,index) => {
+    return <Language backgroundColor={lang.backgroundColor} key={index} name={lang.name} color={lang.color}/>
+  }
+  )
   return (
     <>
-    <h2 className="Title">Assembly: Endgame</h2>
+    <header>    <h2 className="Title">Assembly: Endgame</h2>
     <p className="description">Guess the word in under 8 attempts to keep the programming world safe from Assembly!</p>
-    <main></main>
+    </header>
+    <div className="status"><h2>You win!</h2><p>Congratulations!</p></div>
+    <section className="languages">{languageData}</section>
+    <section className="wordspace">{wordData}</section>
+    <main>{keyboardData}</main>
     </>
   )
 }

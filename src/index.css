@@ -29,15 +29,14 @@ body {
   color: #8E8E8E;
   font-size: 14pt;
   width: 500px;
-  margin-left:14%
+  margin-inline: auto
 }
 .status{
-  background-color: #10A95B;
   width: 350px;
   height: 52px;
   display: flex;
   align-items: center;
-  margin-left: 23%;
+  margin-inline: auto;
   border-radius: 4px;
   flex-direction: column;
   margin-block: 30px;
@@ -57,12 +56,26 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   gap: 5px;
-  margin-left: 23%;
+  margin-inline:auto;
 }
-.block{
+span.block{
   border-radius: 3px;
   padding: 6px;
   font-weight: 700;
+  position:relative
+}
+span.block.lost::before {
+  content: "💀";
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  font-size: 0.85rem;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 .word{
   text-transform: uppercase;
@@ -83,7 +96,7 @@ body {
   font-weight: 700;
   margin-bottom: 20px;
 }
-.keyboard-element {
+.keyboardSpace > button {
   width: 60px;
   height: 60px;
   border-radius: 4px;
@@ -114,4 +127,11 @@ body {
     display: block;
     margin-inline: auto;
     cursor: pointer;
+}
+.keyboardSpace > button.correct {
+  background-color: #10A95B;
+}
+
+.keyboardSpace > button.wrong {
+  background-color: #EC5D49;
 }

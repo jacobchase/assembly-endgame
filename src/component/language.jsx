@@ -4,6 +4,6 @@ export default function Language(props){
         color: props.color
     }
     return(
-        <section className="block" style={styles}>{props.name}</section>
+        <span className={props.className} style={styles}>{props.name}</span>
     )
 }

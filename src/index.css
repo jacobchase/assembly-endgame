@@ -77,7 +77,7 @@ span.block.lost::before {
   left: 0;
   background-color: rgba(0, 0, 0, 0.7);
 }
-.word{
+section.wordspace > span{
   text-transform: uppercase;
   width: 40px;
   height: 40px;
@@ -134,4 +134,8 @@ span.block.lost::before {
 
 .keyboardSpace > button.wrong {
   background-color: #EC5D49;
+}
+
+section.wordspace > span.missed-letter {
+  color: #EC5D49;
 }

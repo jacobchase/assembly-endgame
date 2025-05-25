@@ -4,10 +4,12 @@ import Language from './component/language'
 import Letter from './component/letter'
 import Keyboard from './component/keyboard'
 import { getFarewellText } from './utils'
+import { words } from './words'
+import Confetti from 'react-confetti'
 import clsx from 'clsx'
 
 export default function App() {
-  const [currentWord,setCurrentWord] = useState("react")
+  const [currentWord,setCurrentWord] = useState(() => generateRandomWord())
   const letterElements=currentWord.split("")
   const alphabet="abcdefghijklmnopqrstuvwxyz"
   const [guessedLetters, setGuessedLetters] =useState([])
@@ -18,6 +20,13 @@ export default function App() {
   const lastGuessedLetter = guessedLetters[guessedLetters.length - 1]
   const isLastGuessIncorrect = lastGuessedLetter && !currentWord.includes(lastGuessedLetter)
 
+  function newGame(){
+    setCurrentWord(generateRandomWord)
+    setGuessedLetters([])
+  }
+  function generateRandomWord(){
+    return (words[Math.floor(Math.random() *(words.length))])
+  }
   function guessLetter(letter){
     setGuessedLetters(prevLetter => prevLetter.includes(letter) ? prevLetter : [...prevLetter,letter])
     if(guessedLetters.includes(letter) && !currentWord.includes(letter)){
@@ -37,7 +46,11 @@ export default function App() {
 
   //Create and return Boxes for the word to guess
   const wordData= letterElements.map((letter,index) => {
-    return <Letter letter={guessedLetters.includes(letter)? letter : ""} key={index}/>
+    const shouldRevealLetter = isGameLost || guessedLetters.includes(letter)
+    const letterClassName= clsx(
+      isGameLost && !guessedLetters.includes(letter) && "missed-letter"
+    )
+    return <Letter className={letterClassName} letter={shouldRevealLetter? letter : ""} key={index}/>
   })
 
   //Create and return Language blocks
@@ -80,7 +93,8 @@ export default function App() {
     <section className="languages">{languageData}</section>
     <section className="wordspace">{wordData}</section>
     <main className="keyboardSpace">{keyboardData}</main>
-    {isGameOver && <button className="new-game">New Game</button>}
+    {isGameOver && <button className="new-game" onClick={newGame}>New Game</button>}
+    {isGameWon && <Confetti width={1500} height={700}/>}
     </>
   )
 }
